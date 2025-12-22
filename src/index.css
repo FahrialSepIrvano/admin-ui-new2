@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  /* Warna Utama (Te2al) */
+  --color-primary: #299D91;
+
+  /* Warna Layout */
+  --color-defaultBlack: #191919;      /* Warna Sidebar Gelap */
+  --color-special-mainBg: #F4F5F7;    /* Warna Background Abu-abu Terang */
+  --color-special-bg2: #878787;       /* Warna Teks Sidebar (sebelum aktif) */
+  --color-special-bg3: #202020;       /* Warna Hover Sidebar */
+  
+  /* Warna Teks/Border Umum */
+  --color-gray-01: #666666;
+  --color-gray-03: #9F9F9F;
+  --color-gray-05: #E8E8E8;
+  
+  /* Font */
+  --font-poppins: "Poppins", sans-serif;
+}
+
+/* Reset dasar */
+body {
+  font-family: var(--font-poppins);
+  background-color: var(--color-special-mainBg);
+}
