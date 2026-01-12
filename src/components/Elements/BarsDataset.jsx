@@ -1,42 +1,38 @@
-import { BarChart } from '@mui/x-charts/BarChart'; 
-import * as React from "react";
-import { ThemeContext } from '../../context/themeContext';
+import React, { useContext } from "react";
+import { BarChart } from "@mui/x-charts/BarChart";
+// Import ThemeContext untuk mengambil warna tema global [cite: 1735]
+import { ThemeContext } from "../../context/themeContext";
 
-const chartSetting = {
-  height: 300,
-  yAxis: [
-    {
-      disableTicks: true,
-      disableLine: true,
-      width: 50,
-    },
-  ],
-  grid: {
-    horizontal: true,
-  },
-  sx: {
-    ["& .MuiChartsAxis-left .MuiChartsAxis-tickLabel"]: {
-      fill: "#9F9F9F",
-    },
-    ["& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel"]: {
-      fill: "#9F9F9F",
-    },
-  },
-};
-
-export default function BarsDataset(props) {
+const BarsDataset = (props) => {
   const { dataset } = props;
-  const { theme } = React.useContext(ThemeContext);
+  
+  // Mengambil state global theme [cite: 1792]
+  const { theme } = useContext(ThemeContext);
 
-  const expensesSeries = dataset.series.map((item) =>
-    item.dataKey === "amountLastWeek" ? { ...item,color: theme.color } : item);
+  // Mengatur agar warna grafik "This Week" mengikuti warna tema aktif [cite: 1795, 1804, 1805]
+  const expensesSeries = [
+    { 
+      dataKey: "amountThisWeek", 
+      label: "This Week", 
+      color: theme.color // Menggunakan hexcode dari context
+    },
+    { 
+      dataKey: "amountLastWeek", 
+      label: "Last Week", 
+      color: "#E8E8E8" 
+    },
+  ];
 
   return (
     <BarChart
-      dataset={dataset.data}
-      xAxis={[{ dataKey: dataset.dataKey, categoryGapRatio: 0.5 }]}
+      dataset={dataset}
+      xAxis={[{ scaleType: "band", dataKey: "date" }]}
       series={expensesSeries}
-      {...chartSetting}
+      height={220}
+      margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
+      slotProps={{ legend: { hidden: true } }}
     />
   );
-}
+};
+
+export default BarsDataset;

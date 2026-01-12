@@ -1,42 +1,48 @@
-import React from "react";
+import React, { useContext } from "react";
 import Card from "../Elements/Card";
+// 1. Import ThemeContext agar bisa mengambil hex color langsung
+import { ThemeContext } from "../../context/themeContext";
 
-function CardUpcomingBill(props) {
+const CardUpcomingBill = (props) => {
   const { data } = props;
+  
+  // 2. Gunakan useContext untuk mengambil warna (seperti di CardGoal/CompositionExample)
+  const { theme } = useContext(ThemeContext);
 
   return (
-    <>
-      <Card
-        title="Upcoming Bill"
-        link="/bill"
-        desc={
-          <div className="flex flex-col justify-around h-full">
-            {data.map((item) => (
-              <div key={item.id} className="flex justify-between pt-3 pb-3">
-                <div className="flex">
-                  <div className="bg-special-bg p-4 rounded-lg flex flex-col">
-                    <span className="text-xs">{item.month}</span>
-                    <span className="text-2xl font-bold">{item.date}</span>
-                  </div>
-                  <div className="ms-10">
-                    {item.icon}
-                    <span className="font-bold">{item.name}</span>
-                    <br />
-                    <span className="text-xs">Last Charge - {item.lastCharge}</span>
-                  </div>
+    <Card
+      title="Upcoming Bill"
+      link="/bill"
+      desc={
+        <div className="space-y-4">
+          {data.map((bill) => (
+            <div key={bill.id} className="flex justify-between items-center">
+              <div className="flex gap-4 items-center">
+                <div className="bg-gray-100 px-3 py-1 rounded-lg text-center">
+                  <p className="text-xs text-gray-500">{bill.month}</p>
+                  <p className="text-lg font-bold">{bill.date}</p>
                 </div>
-                <div className="flex items-center">
-                  <span className="py-2 px-4 border border-gray-05 rounded-lg font-bold">
-                    ${item.amount}
-                  </span>
+                <div>
+                  <div className="flex items-center gap-2">
+                    {bill.icon}
+                    <p className="text-sm font-bold">{bill.name}</p>
+                  </div>
+                  <p className="text-xs text-gray-500">Last Charge: {bill.lastCharge}</p>
                 </div>
               </div>
-            ))}
-          </div>
-        }
-      />
-    </>
+              {/* 3. Gunakan inline style dengan theme.color agar pasti berubah seperti grafik */}
+              <p 
+                className="text-sm font-bold text-white px-3 py-1 rounded-full transition-colors duration-300"
+                style={{ backgroundColor: theme.color }}
+              >
+                ${bill.amount}
+              </p>
+            </div>
+          ))}
+        </div>
+      }
+    />
   );
-}
+};
 
 export default CardUpcomingBill;

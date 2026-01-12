@@ -12,7 +12,6 @@ function GaugePointer(props) {
   const { valueAngle, outerRadius, cx, cy } = useGaugeState();
 
   if (valueAngle === null) {
-    // No value to display
     return null;
   }
 
@@ -20,6 +19,7 @@ function GaugePointer(props) {
     x: cx + outerRadius * Math.sin(valueAngle),
     y: cy - outerRadius * Math.cos(valueAngle),
   };
+
   return (
     <g>
       <circle cx={cx} cy={cy} r={5} fill={color} />
@@ -34,6 +34,7 @@ function GaugePointer(props) {
 
 export default function CompositionExample(props) {
   const { data } = props;
+  // Mengambil state global theme untuk warna grafik
   const { theme } = React.useContext(ThemeContext);
 
   return (
@@ -45,7 +46,8 @@ export default function CompositionExample(props) {
       value={data}
     >
       <GaugeReferenceArc />
-      <GaugeValueArc sx={{ fill: theme.color}} />
+      {/* Warna fill busur mengikuti tema */}
+      <GaugeValueArc sx={{ fill: theme.color }} />
       <GaugePointer color={theme.color} />
     </GaugeContainer>
   );

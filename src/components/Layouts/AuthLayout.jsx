@@ -1,24 +1,27 @@
-import React, { useContext} from 'react'
-import Logo from '../Elements/Logo';
-import { ThemeContext } from '../../context/themeContext';
+import React, { useContext } from "react";
+import LogoDashboard from "../Elements/LogoDashboard";
+import { ThemeContext } from "../../context/themeContext";
 
-function AuthLayout(props) {
-    const { children } = props;
-    const { theme }= useContext(ThemeContext)
+// src/components/Layouts/AuthLayout.jsx
+
+const AuthLayout = (props) => {
+  const { children, title } = props;
+  const { theme } = useContext(ThemeContext);
 
   return (
-    <> 
-    <main
-    main className={`min-h-screen bg-special-mainBg flex justify-center items-center ${theme.name}`}>
-      {/* container start */}
-      <div className="w-full max-w-sm">
-        <Logo />
+    <main className={`min-h-screen bg-special-mainBg flex justify-center items-center ${theme.name} font-poppins`}>
+      {/* PERBAIKAN: Hapus 'shadow-sm' 
+          Gunakan 'border border-gray-200' untuk tampilan flat yang tetap rapi 
+      */}
+      <div className="w-full max-w-sm  p-8 rounded-2xl">
+        <div className="flex justify-center mb-10">
+          <LogoDashboard variant="primary" />
+        </div>
+        <h1 className="text-3xl font-bold mb-2 text-center text-slate-900">{title}</h1>
+        <p className="text-sm text-gray-500 text-center mb-8">Welcome back! Please enter your details.</p>
         {children}
       </div>
-      {/* container end */}
     </main>
-    </>
-  )
-}
-
-export default AuthLayout
+  );
+};
+export default AuthLayout;

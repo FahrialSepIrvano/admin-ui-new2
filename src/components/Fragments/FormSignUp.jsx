@@ -1,70 +1,116 @@
-import React from 'react';
-import LabeledInput from '../Elements/LabeledInput';
-import Button from '../Elements/Button';
-// TAMBAHKAN IMPORT INI
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from "react";
+import Button from "../Elements/Button";
+import LabeledInput from "../Elements/LabeledInput";
+import { Link } from "react-router-dom";
+import { ThemeContext } from "../../context/themeContext";
 
 const FormSignUp = () => {
+  const { theme } = useContext(ThemeContext);
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
-    <>
-      {/* Judul Form */}
-      <div className="text-center mb-8">
-        <h1 className="text-xl font-bold text-gray-900">Create an Account</h1>
+    <form className="transition-all duration-300">
+      <div className="mb-4">
+        <LabeledInput
+          label="Name"
+          type="text"
+          placeholder="Tanzir Rahman"
+          name="name"
+        />
       </div>
 
-      <form action="">
-        <div className="mb-6">
-          <LabeledInput 
-            label="Name"
-            type="text"
-            placeholder="ninuninu"
-            name="name"
-          />
-        </div>
-        <div className="mb-6">
-          <LabeledInput 
-            label="Email Address"
-            type="email"
-            placeholder="hello@example.com"
-            name="email"
-          />
-        </div>
-        <div className="mb-6">
-          <LabeledInput 
-            label="Password"
-            type="password"
-            placeholder="*************"
-            name="password"
-          />
-        </div>
-        
-        <Button variant="primary" type="submit">
-          Sign Up
-        </Button>
-      </form>
-
-      {/* Pembatas */}
-      <div className="my-9 px-7 flex flex-col justify-center items-center text-xs text-gray-03">
-          <div className="border border-gray-05 w-full"></div>
-          <div className="px-2 bg-special-mainBg absolute"> or sign up with</div>
+      <div className="mb-4">
+        <LabeledInput
+          label="Email Address"
+          type="email"
+          placeholder="hello@example.com"
+          name="email"
+        />
       </div>
 
-      {/* Tombol Google */}
-      <div className="mb-8">
-        <Button type="button" variant="secondary">
-          <span className="flex items-center justify-center">
-             <span className="mr-2 font-bold text-lg">G</span> 
-             Continue with Google
+      <div className="mb-4 relative">
+        <LabeledInput
+          label="Password"
+          type={showPassword ? "text" : "password"}
+          placeholder="*************"
+          name="password"
+        />
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          className="absolute top-[40px] right-3 text-slate-400 hover:text-slate-600 transition-colors"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-5 h-5"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+            />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div className="mb-6">
+        <p className="text-xs text-slate-500">
+          By continuing, you agree to our{" "}
+          <span
+            className="font-bold cursor-pointer hover:underline transition-colors"
+            style={{ color: theme.color }}
+          >
+            terms of service
           </span>
-        </Button>
+          .
+        </p>
       </div>
 
-      {/* Link Login */}
-      <div className="flex justify-center text-sm">
-          <span className="text-gray-500 mr-1">Already have an account?</span>
-          <Link to="/login" className="text-primary font-bold cursor-pointer">Sign in here</Link>
+      <Button
+        type="submit"
+        className="w-full text-white transition-all duration-200 hover:opacity-90 active:scale-95"
+        style={{ backgroundColor: theme.color }}
+      >
+        Sign up
+      </Button>
+
+      <div className="my-6 flex items-center justify-center relative">
+        <div className="border-t border-slate-300 w-full absolute"></div>
+        <span className="px-3 bg-white relative z-10 text-slate-400 text-sm">
+          or sign up with
+        </span>
       </div>
-    </>
+
+      <Button
+        variant="secondary"
+        type="button"
+        className="w-full bg-gray-100 text-slate-600 hover:bg-gray-200 transition-all"
+      >
+        <span className="flex items-center justify-center gap-2">
+          Continue with Google
+        </span>
+      </Button>
+
+      <p className="text-sm mt-5 text-center text-slate-500">
+        Already have an account?{" "}
+        <Link
+          to="/login"
+          className="font-bold hover:underline transition-colors"
+          style={{ color: theme.color }}
+        >
+          Sign in here
+        </Link>
+      </p>
+    </form>
   );
 };
 

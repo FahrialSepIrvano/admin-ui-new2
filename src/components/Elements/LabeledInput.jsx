@@ -1,17 +1,22 @@
-import React from "react";
-import Input from "./Input";
-
-function LabeledInput(props) {
-  const { label, id, ...rest } = props;
-
+const LabeledInput = ({
+  label,
+  type,
+  placeholder,
+  value,
+  onChange,
+}) => {
   return (
-    <>
-      <label htmlFor={id} className="block text-sm mb-2">
-        {label}
-      </label>
-      <Input id={id} {...rest} />
-    </>
+    <div className="flex flex-col gap-2">
+      <label className="text-sm font-medium">{label}</label>
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        className="border rounded-lg px-4 py-2 focus:outline-none"
+      />
+    </div>
   );
-}
+};
 
 export default LabeledInput;

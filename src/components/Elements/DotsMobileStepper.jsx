@@ -8,10 +8,11 @@ import { ThemeContext } from "../../context/themeContext";
 
 export default function DotsMobileStepper(props) {
   const { data } = props;
-  const { theme: themeMode } = React.useContext(ThemeContext);
-
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
+
+  // Mengambil state global theme dan aliaskan menjadi themeMode
+  const { theme: themeMode } = React.useContext(ThemeContext);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -29,15 +30,11 @@ export default function DotsMobileStepper(props) {
         steps={data.length}
         position="static"
         activeStep={activeStep}
-        	sx={{
+        sx={{
           maxWidth: "400",
           flexGrow: 1,
-          "& .MuiMobileStepper-dot": { 
-	          backgroundColor: "darkgray" 
-	        },
-          "& .MuiMobileStepper-dotActive": {
-            backgroundColor: themeMode.color,
-          },
+          "& .MuiMobileStepper-dot": { backgroundColor: "darkgray" },
+          "& .MuiMobileStepper-dotActive": { backgroundColor: themeMode.color },
         }}
         nextButton={
           <Button
@@ -55,11 +52,11 @@ export default function DotsMobileStepper(props) {
           </Button>
         }
         backButton={
-          <Button 
-          size="small" 
-          onClick={handleBack} 
-          disabled={activeStep === 0}
-          sx={{ color: "black" }}
+          <Button
+            size="small"
+            onClick={handleBack}
+            disabled={activeStep === 0}
+            sx={{ color: "black" }}
           >
             {theme.direction === "rtl" ? (
               <KeyboardArrowRight />

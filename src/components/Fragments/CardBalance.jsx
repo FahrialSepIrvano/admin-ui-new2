@@ -1,56 +1,64 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
 import Card from "../Elements/Card";
 import DotsMobileStepper from "../Elements/DotsMobileStepper";
-import Icon from "../Elements/Icon"; 
+import { Link } from "react-router-dom";
+import Icon from "../Elements/Icon";
+// Import ThemeContext untuk mengambil hex color
+import { ThemeContext } from "../../context/themeContext";
 
 function CardBalance(props) {
   const { data } = props;
+  
+  // Gunakan useContext untuk mengakses state global tema
+  const { theme } = useContext(ThemeContext);
 
   return (
-    <>
-      <Card
-        title="Total Balance"
-        desc={
-          <DotsMobileStepper
-            data={data.map((item) => (
-              <div key={item.id} className="p-2">
-                <div className="flex justify-between">
-                  <div className="text-2xl font-bold">${item.balance}</div>
-                  <div>
-                    <Link to="/balance">All account</Link>
-                  </div>
+    <Card
+      title="Total Balance"
+      desc={
+        <DotsMobileStepper
+          data={data.map((item) => (
+            <div key={item.id} className="p-2">
+              <div className="flex justify-between items-center">
+                <div className="text-2xl font-bold text-gray-800">
+                  ${item.balance.toLocaleString()}
                 </div>
-                <div className="border-b-1 border-gray-05 my-4"></div>
-                <div className="flex justify-between bg-primary text-white p-4 rounded-md">
-                  <div>
-                    Account Type
-                    <br />
-                    <span className="text-xl font-bold">
-                      {item.accountType}
-                    </span>
-                    <br />
-                    {item.accountNumber}
-                  </div>
-                  <div className="flex flex-col justify-between">
-                    <div className="ms-auto text-transparent">{item.logo}</div>
-                    <div className="flex">
-                      <span className="text-xl font-bold me-2">
-                        ${item.balance}
-                      </span>
-                      <div className="bg-white text-primary rounded-full">
-                        <Icon.ArrowUpRight width={18} height={18} />
-                      </div>
+                <Link to="/balance" className="text-xs text-gray-400 hover:underline">
+                  All account
+                </Link>
+              </div>
+              
+              <div className="border-b border-gray-100 my-4"></div>
+              
+              {/* Bagian kartu menggunakan inline style agar sinkron dengan grafik */}
+              <div 
+                className="text-white p-4 rounded-xl flex justify-between transition-colors duration-300"
+                style={{ backgroundColor: theme.color }}
+              >
+                <div>
+                  <p className="text-[10px] opacity-80 uppercase">Account Type</p>
+                  <p className="text-lg font-bold italic">{item.accountType}</p>
+                  <p className="text-[10px] mt-1 tracking-widest">{item.accountNumber}</p>
+                </div>
+                <div className="flex flex-col justify-between items-end">
+                  <div>{item.logo}</div>
+                  <div className="flex items-center">
+                    <span className="text-xl font-bold me-2">${item.balance.toLocaleString()}</span>
+                    {/* Ikon panah kecil juga mengikuti warna tema */}
+                    <div 
+                      className="bg-white rounded-full p-0.5"
+                      style={{ color: theme.color }}
+                    >
+                      <Icon.ArrowUpRight size={16} />
                     </div>
                   </div>
                 </div>
               </div>
-            ))}
-          />
-        }
-        // BAGIAN BAWAH INI SAYA BERSIHKAN DARI SISA KODE YANG BERLEBIH
-      />
-    </>
+            </div>
+          ))}
+        />
+      }
+    />
   );
 }
 

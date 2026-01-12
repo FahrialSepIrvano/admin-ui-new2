@@ -1,17 +1,22 @@
-import "./App.css";
-import SignInPage from "./pages/SignIn";
-import SignUpPage from "./pages/SignUp";
-import ErrorPage from "./pages/Error";
-import DashboardPage from "./pages/dashboard";
-import BalancePage from "./pages/balance";
+import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-function App() {
-  const myRouter = createBrowserRouter([
+import SignInPage from "./pages/signin";
+import SignUpPage from "./pages/signup";
+import DashboardPage from "./pages/dashboard";
+import BalancePage from "./pages/BalancePage";
+import ErrorPage from "./pages/404";
+
+const App = () => {
+  const router = createBrowserRouter([
     {
       path: "/",
-      element: <DashboardPage />, 
+      element: <DashboardPage />,
       errorElement: <ErrorPage />,
+    },
+    {
+      path: "/balance",
+      element: <BalancePage />,
     },
     {
       path: "/login",
@@ -21,17 +26,9 @@ function App() {
       path: "/register",
       element: <SignUpPage />,
     },
-    {
-      path: "/balance",
-      element: <BalancePage />,
-    }
   ]);
 
-  return (
-    <>
-      <RouterProvider router={myRouter} />
-    </>
-  );
-}
+  return <RouterProvider router={router} />;
+};
 
 export default App;

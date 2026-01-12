@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ThemeContext } from "../../context/themeContext";
 
 const Button = (props) => {
-  const { children, classname = "bg-primary w-full", onClick = () => {}, type = "button" } = props;
+  const { children, className, style, type } = props;
   return (
     <button
-      className={`h-10 px-6 font-semibold rounded-md ${classname} text-white`}
       type={type}
-      onClick={onClick}
+      style={style}
+      // Pastikan tidak ada class shadow-md atau sejenisnya di sini
+      className={`${className} p-3 rounded-md font-bold transition-all hover:opacity-90`}
     >
       {children}
     </button>
