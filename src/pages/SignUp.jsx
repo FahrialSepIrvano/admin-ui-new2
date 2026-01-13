@@ -34,7 +34,9 @@ const SignUpPage = () => {
 
   return (
     <AuthLayout title="Create an account" type="register">
+      {/* Hanya panggil FormSignUp, jangan ada tombol lain disini */}
       <FormSignUp onSubmit={handleRegister} />
+      
       <AppSnackbar
         open={snackbar.open}
         message={snackbar.message}
